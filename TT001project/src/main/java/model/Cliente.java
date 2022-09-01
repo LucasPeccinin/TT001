@@ -13,16 +13,26 @@ public class Cliente {
     private String cpf;
     private String cep;
     private String email;
+    private String telefone;
     
     private List<Animal> animais;
 
-    public Cliente(int id, String nome, String cpf, String cep, String email) {
+    public Cliente(int id, String nome, String cpf, String cep, String email, String telefone) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.cep = cep;
         this.email = email;
+        this.telefone = telefone;
         this.animais = new ArrayList<Animal>();
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public int getId() {
