@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Lucas Peccinin
@@ -14,8 +11,6 @@ public class Cliente {
     private String cep;
     private String email;
     private String telefone;
-    
-    private List<Animal> animais;
 
     public Cliente(int id, String nome, String cpf, String cep, String email, String telefone) {
         this.id = id;
@@ -24,7 +19,6 @@ public class Cliente {
         this.cep = cep;
         this.email = email;
         this.telefone = telefone;
-        this.animais = new ArrayList<Animal>();
     }
 
     public String getTelefone() {
@@ -73,9 +67,4 @@ public class Cliente {
         this.email = email;
     }
     
-    public void addAnimal(Animal animal){
-        if(animal.getNome().isBlank()){
-            animais.add(animal);
-        }
-    }
 }

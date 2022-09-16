@@ -6,12 +6,12 @@ package model;
  */
 public class Exame {
     private int id;
-    private String descricao;
+    private String nome;
     private int consulta;
 
-    public Exame(int id, String descricao, int consulta) {
+    public Exame(int id, String nome, int consulta) {
         this.id = id;
-        this.descricao = descricao;
+        this.nome = nome;
         this.consulta = consulta;
     }
 
@@ -19,12 +19,12 @@ public class Exame {
         return id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getConsulta() {

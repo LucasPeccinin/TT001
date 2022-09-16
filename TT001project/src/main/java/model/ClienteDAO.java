@@ -59,7 +59,7 @@ public class ClienteDAO extends DAO {
     private Cliente buildObject(ResultSet rs){
         Cliente cliente = null;
         try{
-            cliente = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("cpf"), rs.getString("cep"), rs.getString("email"), rs.getString("telefone"));
+            cliente = new Cliente(rs.getInt("ID"), rs.getString("NOME"), rs.getString("CPF"), rs.getString("CEP"), rs.getString("EMAIL"), rs.getString("TELEFONE"));
         }
         catch (SQLException e) {
             System.err.println("Erro: " + e.getMessage());

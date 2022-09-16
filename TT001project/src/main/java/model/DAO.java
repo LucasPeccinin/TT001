@@ -37,7 +37,7 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
         return con;
     }
     
-    protected ResultSet getResultSet(String query){
+    protected ResultSet getResultSet(String query){ //classe que permite consultar o retorno do banco de dados
         Statement st;
         ResultSet rs = null;
         try {
@@ -61,7 +61,7 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
         int lastId = -1;
         try {
             s = (Statement) con.createStatement();
-            ResultSet rs = s.executeQuery("SELECT MAX("+primaryKey+") AS ID FROM"+tableName);
+            ResultSet rs = s.executeQuery("SELECT MAX("+ primaryKey +") AS ID FROM " + tableName);
             if(rs.next()){
                 lastId = rs.getInt("id");
             }
@@ -91,61 +91,62 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
                         "NOME VARCHAR,\n" +
                         "CPF VARCHAR,\n" +
                         "CEP VARCHAR,\n" +
-                        "EMAIL VARCHAR,\n"+
-                        "TELEFONE VARCHAR);\n");
+                        "EMAIL VARCHAR,\n" +
+                        "TELEFONE VARCHAR);");
             executeUpdate(stmt);
             //TABELA ANIMAL
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS ANIMAL(\n" +
                         "ID INTEGER PRIMARY KEY, \n" +
-                        "NAME VARCHAR,\n" +
-                        "YEAR_BORN INTEGER,\n" +
-                        "GENDER VARCHAR,\n" +
-                        "ID_SPECIE INTEGER,\n"+
-                        "ID_CLIENT INTEGER);\n");
+                        "NOME VARCHAR,\n" +
+                        "IDADE INTEGER,\n" +
+                        "SEXO VARCHAR,\n" +
+                        "ESPECIE INTEGER,\n" +
+                        "CLIENTE INTEGER);");
             executeUpdate(stmt);
             //TABELA ESPECIE
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS ESPECIE(\n" +
                         "ID INTEGER PRIMARY KEY, \n" +
-                        "NAME VARCHAR);\n");
+                        "NOME VARCHAR);");
             executeUpdate(stmt);
             //TABELA VETERINARIO
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS VETERINARIO(\n" +
                         "ID INTEGER PRIMARY KEY, \n" +
-                        "NAME VARCHAR,\n" +
-                        "EMAIL VARCHAR,\n"+
-                        "PHONE VARCHAR,\n"+
-                        "ADDRESS VARCHAR);\n"); 
+                        "NOME VARCHAR,\n" +
+                        "EMAIL VARCHAR,\n" +
+                        "TELEFONE VARCHAR,\n" +
+                        "CEP VARCHAR);"); 
             executeUpdate(stmt);
             //TABELA TRATAMENTO
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS TRATAMENTO(\n" +
                         "ID INTEGER PRIMARY KEY, \n" +
-                        "ID_ANIMAL INTEGER,\n" +
-                        "NAME VARCHAR,\n"+
-                        "START_DATE TEXT,\n"+
-                        "END_DATE TEXT,\n"+
-                        "DONE INTEGER);\n"); 
+                        "ANIMAL INTEGER,\n" +
+                        "NOME VARCHAR,\n" +
+                        "INICIO TEXT,\n" +
+                        "FIM TEXT,\n" +
+                        "FINALIZADO INTEGER);"); 
             executeUpdate(stmt);
             //TABELA CONSULTA
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS CONSULTA(\n" +
                         "ID INTEGER PRIMARY KEY, \n" +
-                        "ID_ANIMAL INTEGER,\n" +
-                        "ID_VET INTEGER,\n"+
-                        "ID_TRAT INTEGER,\n"+
-                        "COMENTARIOS VARCHAR,\n"+
-                        "DATE TEXT,\n"+
-                        "TIME_OF_DAY VARCHAR,\n"+
-                        "DONE INTEGER);\n"); 
+                        "ANIMAL INTEGER,\n" +
+                        "VETERINARIO INTEGER,\n" +
+                        "TRATAMENTO INTEGER,\n" +
+                        "COMENTARIOS VARCHAR,\n" +
+                        "HORA INT,\n" +
+                        "DATA VARCHAR,\n" +
+                        "FINALIZADO INTEGER);"); 
             executeUpdate(stmt);
             //TABELA EXAME
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS EXAME(\n" +
-                        "NAME VARCHAR,\n"+
-                        "ID_CONSULTA INTEGER);\n"); 
+                        "ID INTEGER,\n" +
+                        "NAME VARCHAR,\n" +
+                        "CONSULTA INTEGER);"); 
             executeUpdate(stmt);
             return true;
         }

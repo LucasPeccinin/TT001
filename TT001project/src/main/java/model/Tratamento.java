@@ -10,19 +10,17 @@ public class Tratamento {
     private int id;
     private int animal;
     private String nome;
-    private Calendar dtInicio;
-    private Calendar dtFim;
-    private int idAnimal;
-    private boolean terminou;
+    private String inicio;
+    private String fim;
+    private boolean finalizado;
 
-    public Tratamento(int id, int animal, String nome, Calendar dtInicio, Calendar dtFim, int idAnimal, boolean terminou) {
+    public Tratamento(int id, int animal, String nome, String inicio, String fim, boolean finalizado) {
         this.id = id;
         this.animal = animal;
         this.nome = nome;
-        this.dtInicio = dtInicio;
-        this.dtFim = dtFim;
-        this.idAnimal = idAnimal;
-        this.terminou = terminou;
+        this.inicio = inicio;
+        this.fim = fim;
+        this.finalizado = finalizado;
     }
 
     public int getId() {
@@ -41,36 +39,28 @@ public class Tratamento {
         this.nome = nome;
     }
 
-    public Calendar getDtInicio() {
-        return dtInicio;
+    public String getInicio() {
+        return inicio;
     }
 
-    public void setDtInicio(Calendar dtInicio) {
-        this.dtInicio = dtInicio;
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
     }
 
-    public Calendar getDtFim() {
-        return dtFim;
+    public String getFim() {
+        return fim;
     }
 
-    public void setDtFim(Calendar dtFim) {
-        this.dtFim = dtFim;
+    public void setFim(String fim) {
+        this.fim = fim;
     }
 
-    public int getIdAnimal() {
-        return idAnimal;
+    public boolean isFinalizado() {
+        return finalizado;
     }
 
-    public void setIdAnimal(int idAnimal) {
-        this.idAnimal = idAnimal;
-    }
-
-    public boolean isTerminou() {
-        return terminou;
-    }
-
-    public void setTerminou(boolean terminou) {
-        this.terminou = terminou;
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     

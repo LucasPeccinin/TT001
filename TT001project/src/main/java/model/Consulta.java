@@ -13,10 +13,10 @@ public class Consulta {
     private int tratamento;
     private String comentarios;
     private int hora;
-    private Calendar data;
-    private boolean terminou;
+    private String data;
+    private boolean finalizado;
 
-    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, Calendar data, boolean terminou) {
+    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, String data, boolean finalizado) {
         this.id = id;
         this.veterinario = veterinario;
         this.animal = animal;
@@ -24,7 +24,7 @@ public class Consulta {
         this.comentarios = comentarios;
         this.hora = hora;
         this.data = data;
-        this.terminou = terminou;
+        this.finalizado = finalizado;
     }
 
     public int getId() {
@@ -60,20 +60,20 @@ public class Consulta {
         this.hora = hora;
     }
 
-    public Calendar getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Calendar data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public boolean isTerminou() {
-        return terminou;
+    public boolean isFinalizado() {
+        return finalizado;
     }
 
-    public void setTerminou(boolean terminou) {
-        this.terminou = terminou;
+    public void setFinalizado(boolean finalizado) {
+        this.finalizado = finalizado;
     }
     
     

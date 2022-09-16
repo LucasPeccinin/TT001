@@ -9,13 +9,25 @@ public class Veterinario {
     private String nome;
     private String email;
     private String telefone;
+    private String cep;
 
-    public Veterinario(int id, String nome, String email, String telefone) {
+    public Veterinario(int id, String nome, String email, String telefone, String cep) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.cep = cep;
     }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+    
+    
 
     public int getId() {
         return id;
