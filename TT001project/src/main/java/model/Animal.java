@@ -8,11 +8,11 @@ public class Animal {
     private int id;
     private String nome;
     private int idade;
-    private int sexo; //0 - macho, 1 - Femea
+    private String sexo; 
     private int cliente;
     private int especie;
 
-    public Animal(int id, String nome, int idade, int sexo, int cliente, int especie) {
+    public Animal(int id, String nome, int idade, String sexo, int cliente, int especie) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -41,11 +41,11 @@ public class Animal {
         this.idade = idade;
     }
 
-    public int getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(int sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
@@ -65,5 +65,9 @@ public class Animal {
         this.especie = especie;
     }
     
+    @Override
+    public String toString() {
+        return "Animal{" + "nome= " + nome + ", idade= " + idade +'}';
+    }
     
 }

@@ -13,10 +13,10 @@ public class Consulta {
     private int tratamento;
     private String comentarios;
     private int hora;
-    private String data;
+    private Calendar data;
     private boolean finalizado;
 
-    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, String data, boolean finalizado) {
+    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, Calendar data, boolean finalizado) {
         this.id = id;
         this.veterinario = veterinario;
         this.animal = animal;
@@ -60,11 +60,11 @@ public class Consulta {
         this.hora = hora;
     }
 
-    public String getData() {
+    public Calendar getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Calendar data) {
         this.data = data;
     }
 

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Lucas Peccinin
@@ -11,7 +14,7 @@ public class Cliente {
     private String cep;
     private String email;
     private String telefone;
-
+    
     public Cliente(int id, String nome, String cpf, String cep, String email, String telefone) {
         this.id = id;
         this.nome = nome;
@@ -67,4 +70,8 @@ public class Cliente {
         this.email = email;
     }
     
+    @Override
+    public String toString() {        
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", endereco=" + cep + ", telefone=" + telefone + ", cep=" + cep + ", email=" + email + '}';
+    }
 }

@@ -26,13 +26,13 @@ public class AnimalDAO extends DAO {
     }
     
     //CRUD
-    public Animal create(String nome, int idade, int sexo, int cliente, int especie){
+    public Animal create(String nome, int idade, String sexo, int cliente, int especie){
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO CLIENTE(NOME, IDADE, SEXO, CLIENTE, ESPECIE) VALUES (?,?,?,?,?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO ANIMAL(NOME, IDADE, SEXO, CLIENTE, ESPECIE) VALUES (?,?,?,?,?)");
             stmt.setString(1, nome);
             stmt.setInt(2, idade);
-            stmt.setInt(3, sexo);
+            stmt.setString(3, sexo);
             stmt.setInt(4, cliente);
             stmt.setInt(5, especie);
             executeUpdate(stmt);
@@ -60,7 +60,7 @@ public class AnimalDAO extends DAO {
     private Animal buildObject(ResultSet rs){
         Animal animal = null;
         try{
-            animal = new Animal(rs.getInt("ID"), rs.getString("NOME"), rs.getInt("IDADE"), rs.getInt("SEXO"), rs.getInt("CLIENTE"), rs.getInt("ESPECIE"));
+            animal = new Animal(rs.getInt("ID"), rs.getString("NOME"), rs.getInt("IDADE"), rs.getString("SEXO"), rs.getInt("CLIENTE"), rs.getInt("ESPECIE"));
         }
         catch (SQLException e) {
             System.err.println("Erro: " + e.getMessage());
@@ -81,6 +81,14 @@ public class AnimalDAO extends DAO {
         return (animais.isEmpty()?null:animais.get(0));
     }
     
+    public List retrieveByIdCliente(int cliente){
+        return this.retrieve("SELECT * FROM ANIMAL WHERE CLIENTE = " + cliente);
+    }
+    
+    public List retrieveByIdEspecie(int especie){
+        return this.retrieve("SELECT * FROM ANIMAL WHERE ESPECIE = " + especie );
+    }
+    
     public List retrieveBySimilarName(String nome){
         return this.retrieve("SELECT * FROM ANIMAL WHERE NOME LIKE '%"+nome+"%'");
     }
@@ -99,7 +107,7 @@ public class AnimalDAO extends DAO {
             stmt = DAO.getConnection().prepareStatement("UPDATE ANIMAL SET NOME = ?, IDADE = ?, SEXO = ?, CLIENTE = ?, ESPECIE = ? WHERE ID = ?");
             stmt.setString(1, animal.getNome());
             stmt.setInt(2, animal.getIdade());
-            stmt.setInt(3, animal.getSexo());
+            stmt.setString(3, animal.getSexo());
             stmt.setInt(4, animal.getCliente());
             stmt.setInt(5, animal.getEspecie());
             stmt.setInt(6, animal.getId());

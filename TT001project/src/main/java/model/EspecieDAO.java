@@ -67,11 +67,7 @@ public class EspecieDAO extends DAO {
     public List retrieveAll(){
         return this.retrieve("SELECT * FROM ESPECIE");
     }
-    
-    public List retriveLast(){
-        return this.retrieve("SELECT * FROM ESPECIE WHERE ID = " + lastId("especie", "id"));
-    }
-    
+        
     public Especie retrieveById(int id){
         List<Especie> especies = this.retrieve("SELECT * FROM ESPECIE WHERE ID = "+ id);
         return (especies.isEmpty()?null:especies.get(0));
@@ -79,14 +75,6 @@ public class EspecieDAO extends DAO {
     
     public List retrieveBySimilarName(String nome){
         return this.retrieve("SELECT * FROM ESPECIE WHERE NOME LIKE '%"+nome+"%'");
-    }
-    
-    public boolean isLastEmpty(){
-        Especie lastEspecie = this.retrieveById(lastId("especie", "id"));
-        if (lastEspecie != null){
-            return lastEspecie.getNome().isBlank();
-        }
-        return false;
     }
     
     public void update(Especie especie){

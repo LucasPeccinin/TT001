@@ -72,10 +72,6 @@ public class VeterinarioDAO extends DAO{
         return this.retrieve("SELECT * FROM VETERINARIO");
     }
     
-    public List retriveLast(){
-        return this.retrieve("SELECT * FROM VETERINARIO WHERE ID = " + lastId("veterinario", "id"));
-    }
-    
     public Veterinario retrieveById(int id){
         List<Veterinario> veterinarios = this.retrieve("SELECT * FROM VETERINARIO WHERE ID = "+ id);
         return (veterinarios.isEmpty()?null:veterinarios.get(0));
@@ -83,14 +79,6 @@ public class VeterinarioDAO extends DAO{
     
     public List retrieveBySimilarName(String nome){
         return this.retrieve("SELECT * FROM VETERINARIO WHERE NOME LIKE '%"+nome+"%'");
-    }
-    
-    public boolean isLastEmpty(){
-        Veterinario lastVeterinario = this.retrieveById(lastId("cliente", "id"));
-        if (lastVeterinario != null){
-            return lastVeterinario.getNome().isBlank();
-        }
-        return false;
     }
     
     public void update(Veterinario veterinario){

@@ -69,25 +69,9 @@ public class ExameDAO extends DAO{
         return this.retrieve("SELECT * FROM EXAME");
     }
     
-    public List retriveLast(){
-        return this.retrieve("SELECT * FROM EXAME WHERE ID = " + lastId("exame", "id"));
-    }
-    
     public Exame retrieveById(int id){
         List<Exame> exames = this.retrieve("SELECT * FROM EXAME WHERE ID = "+ id);
         return (exames.isEmpty()?null:exames.get(0));
-    }
-    
-    public List retrieveBySimilarName(String nome){
-        return this.retrieve("SELECT * FROM EXAME WHERE NOME LIKE '%"+nome+"%'");
-    }
-    
-    public boolean isLastEmpty(){
-        Exame lasExame = this.retrieveById(lastId("exame", "id"));
-        if (lasExame != null){
-            return lasExame.getNome().isBlank();
-        }
-        return false;
     }
     
     public void update(Exame exame){

@@ -20,5 +20,10 @@ public class Especie {
     public String getNome() {
         return nome;
     }
+    
+    @Override
+    public String toString() {
+        return "Especie{" + "id=" + id + ", nome=" + nome +'}';
+    }
 
 }
