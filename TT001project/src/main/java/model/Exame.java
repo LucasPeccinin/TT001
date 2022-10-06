@@ -14,7 +14,7 @@ public class Exame {
         this.nome = nome;
         this.consulta = consulta;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -30,4 +30,15 @@ public class Exame {
     public int getConsulta() {
         return consulta;
     }
+
+    public void setConsulta(int consulta) {
+        this.consulta = consulta;
+    }
+    
+    @Override
+    public String toString(){
+        return "Exame{" + "id=" + id + ", nome=" + nome + ", consulta=" + consulta + '}';
+    }
+    
+    
 }

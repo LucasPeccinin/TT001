@@ -125,8 +125,8 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
                         "ID INTEGER PRIMARY KEY, \n" +
                         "ANIMAL INTEGER,\n" +
                         "NOME VARCHAR,\n" +
-                        "INICIO TEXT,\n" +
-                        "FIM TEXT,\n" +
+                        "INICIO VARCHAR,\n" +
+                        "FIM VARCHAR,\n" +
                         "FINALIZADO INTEGER);"); 
             executeUpdate(stmt);
             //TABELA CONSULTA
@@ -144,9 +144,9 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
             //TABELA EXAME
             stmt = DAO.getConnection().prepareStatement(
                         "CREATE TABLE IF NOT EXISTS EXAME(\n" +
-                        "ID INTEGER,\n" +
-                        "NAME VARCHAR,\n" +
-                        "CONSULTA INTEGER);"); 
+                        "ID INTEGER PRIMARY KEY, \n" +
+                        "NOME VARCHAR,\n" +
+                        "CONSULTA INTEGER);");
             executeUpdate(stmt);
             return true;
         }

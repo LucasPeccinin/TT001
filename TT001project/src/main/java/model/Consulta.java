@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -13,10 +14,11 @@ public class Consulta {
     private int tratamento;
     private String comentarios;
     private int hora;
-    private Calendar data;
-    private boolean finalizado;
+    private String data;
+    private int finalizado;
+    //1 - finalizado 2 - não finalizado
 
-    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, Calendar data, boolean finalizado) {
+    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, String data, int finalizado) {
         this.id = id;
         this.veterinario = veterinario;
         this.animal = animal;
@@ -60,21 +62,25 @@ public class Consulta {
         this.hora = hora;
     }
 
-    public Calendar getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Calendar data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public boolean isFinalizado() {
+    public int getFinalizado() {
         return finalizado;
     }
 
-    public void setFinalizado(boolean finalizado) {
+    public void setFinalizado(int finalizado) {
         this.finalizado = finalizado;
     }
     
+    @Override
+    public String toString() {        
+        return "Consulta{" + "id=" + id + ", vet=" + veterinario + ", animal=" + animal + ", cometarios=" + comentarios + ", hora=" + hora + ", data=" + data + ", finalizado=" + finalizado + '}';
+    }
     
 }

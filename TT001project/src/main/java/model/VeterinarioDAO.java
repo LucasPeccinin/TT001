@@ -29,12 +29,11 @@ public class VeterinarioDAO extends DAO{
     public Veterinario create(String nome, String email, String telefone, String cep){
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO VETRINARIO(NOME, EMAIL, TELEFONE ,CEP) VALUES (?,?,?,?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO VETERINARIO(NOME, EMAIL, TELEFONE ,CEP) VALUES (?,?,?,?)");
             stmt.setString(1, nome);
             stmt.setString(2, email);
             stmt.setString(3, telefone);
             stmt.setString(4, cep);
-            stmt.setString(5, telefone);
             executeUpdate(stmt);
         }    
         catch (SQLException err){
@@ -86,26 +85,26 @@ public class VeterinarioDAO extends DAO{
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE VETERINARIO SET NOME = ?, CEP = ?, EMAIL = ?, TELEFONE = ? WHERE ID = ?");
             stmt.setString(1, veterinario.getNome());
-            stmt.setString(3, veterinario.getCep());
-            stmt.setString(4, veterinario.getEmail());
-            stmt.setString(5, veterinario.getTelefone());
-            stmt.setInt(6, veterinario.getId());
+            stmt.setString(2, veterinario.getCep());
+            stmt.setString(3, veterinario.getEmail());
+            stmt.setString(4, veterinario.getTelefone());
+            stmt.setInt(5, veterinario.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){
-            System.err.println("Erro: "+e.getMessage());
+            System.err.println("Erro: " + e.getMessage());
         }
     }
     
     public void delete(Veterinario veterinario){
         PreparedStatement stmt;
         try{
-            stmt = DAO.getConnection().prepareStatement("DELETE * FROM VETERINARIO WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("DELETE FROM VETERINARIO WHERE ID = ?");
             stmt.setInt(1, veterinario.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){
-            System.err.println("Erro: "+e.getMessage());
+            System.err.println("Erro: " + e.getMessage());
         }
     }
 }

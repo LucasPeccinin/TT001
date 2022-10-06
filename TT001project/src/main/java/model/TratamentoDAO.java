@@ -3,9 +3,7 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,15 +26,15 @@ public class TratamentoDAO extends DAO {
     }
     
     //CRUD
-    public Tratamento create(int animal, String nome, Calendar inicio, Calendar fim, boolean finalizado){
+    public Tratamento create(int animal, String nome, String inicio, String fim, int finalizado){
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO TRATAMENTO(ANIMAL, NOME, INICIO, FIM, FINALIZADO) VALUES (?,?,?,?,?)");
             stmt.setInt(1, animal);
             stmt.setString(2, nome);
-            stmt.setString(3, dateFormat.format(inicio.getTime()));
-            stmt.setString(4, dateFormat.format(fim.getTime()));
-            stmt.setInt(5, (finalizado?"1":"0"));
+            stmt.setString(3, inicio);
+            stmt.setString(4, fim);
+            stmt.setInt(5, finalizado);
             executeUpdate(stmt);
         }    
         catch (SQLException err){
@@ -62,18 +60,10 @@ public class TratamentoDAO extends DAO {
     private Tratamento buildObject(ResultSet rs){
         Tratamento tratamento = null;
         try{
-            Calendar inicio = Calendar.getInstance();
-            inicio.setTime(dateFormat.parse(rs.getString("INICIO")));
-            Calendar fim = Calendar.getInstance();
-            fim.setTime(dateFormat.parse(rs.getString("FIM")));
-            
-            tratamento = new Tratamento(rs.getInt("ID"), rs.getInt("ANIMAL"), rs.getString("NOME"), inicio, fim, rs.getBoolean("FINALIZADO"));
+            tratamento = new Tratamento(rs.getInt("ID"), rs.getInt("ANIMAL"), rs.getString("NOME"), rs.getString("INICIO"), rs.getString("FIM"), rs.getInt("FINALIZADO"));
         }
         catch (SQLException e) {
             System.err.println("Erro: " + e.getMessage());
-        }
-        catch (ParseException ex){
-            Logger.getLogger(ConsultaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return tratamento;
     }
@@ -96,10 +86,10 @@ public class TratamentoDAO extends DAO {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE TRATAMENTO SET NOME = ?, INICIO = ?, FIM = ?, FINALIZADO = ? WHERE ID = ?");
             stmt.setString(1, tratamento.getNome());
-            stmt.setString(2, dateFormat.format(tratamento.getInicio().getTime()));
-            stmt.setString(3, dateFormat.format(tratamento.getFim().getTime()));
-            stmt.setInt(4, (tratamento.isFinalizado()?1:0));
-            stmt.setInt(6, tratamento.getId());
+            stmt.setString(2, tratamento.getInicio());
+            stmt.setString(3, tratamento.getFim());
+            stmt.setInt(4, tratamento.getFinalizado());
+            stmt.setInt(5, tratamento.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){
@@ -110,7 +100,7 @@ public class TratamentoDAO extends DAO {
     public void delete(Tratamento tratamento){
         PreparedStatement stmt;
         try{
-            stmt = DAO.getConnection().prepareStatement("DELETE * FROM TRATAMENTO WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("DELETE FROM TRATAMENTO WHERE ID = ?");
             stmt.setInt(1, tratamento.getId());
             executeUpdate(stmt);
         }

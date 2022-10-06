@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static model.DAO.getConnection;
 
 /**
  *
  * @author Lucas Peccinin
  */
-public class ExameDAO extends DAO{
+public class ExameDAO extends DAO {
     private static ExameDAO instance;
     
     private ExameDAO(){
@@ -77,9 +76,10 @@ public class ExameDAO extends DAO{
     public void update(Exame exame){
         try{
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE EXAME SET NOME = ? WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE EXAME SET NOME = ?, CONSULTA = ? WHERE ID = ?");
             stmt.setString(1, exame.getNome());
-            stmt.setInt(2, exame.getId());
+            stmt.setInt(2, exame.getConsulta());
+            stmt.setInt(3, exame.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){
@@ -90,7 +90,7 @@ public class ExameDAO extends DAO{
     public void delete(Exame exame){
         PreparedStatement stmt;
         try{
-            stmt = DAO.getConnection().prepareStatement("DELETE * FROM EXAME WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("DELETE FROM EXAME WHERE ID = ?");
             stmt.setInt(1, exame.getId());
             executeUpdate(stmt);
         }

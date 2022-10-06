@@ -82,7 +82,7 @@ public class EspecieDAO extends DAO {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE ESPECIE SET NOME = ? WHERE ID = ?");
             stmt.setString(1, especie.getNome());
-            stmt.setInt(6, especie.getId());
+            stmt.setInt(2, especie.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){
@@ -93,7 +93,7 @@ public class EspecieDAO extends DAO {
     public void delete(Especie especie){
         PreparedStatement stmt;
         try{
-            stmt = DAO.getConnection().prepareStatement("DELETE * FROM ESPECIE WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("DELETE FROM ESPECIE WHERE ID = ?");
             stmt.setInt(1, especie.getId());
             executeUpdate(stmt);
         }

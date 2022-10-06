@@ -121,7 +121,7 @@ public class AnimalDAO extends DAO {
     public void delete(Animal animal){
         PreparedStatement stmt;
         try{
-            stmt = DAO.getConnection().prepareStatement("DELETE * FROM ANIMAL WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("DELETE FROM ANIMAL WHERE ID = ?");
             stmt.setInt(1, animal.getId());
             executeUpdate(stmt);
         }

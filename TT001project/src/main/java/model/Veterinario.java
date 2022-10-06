@@ -57,5 +57,8 @@ public class Veterinario {
         this.telefone = telefone;
     }
     
-    
+    @Override
+    public String toString() {        
+        return "Veterinario{" + "id=" + id + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + ", cep=" + cep + '}';
+    }
 }
