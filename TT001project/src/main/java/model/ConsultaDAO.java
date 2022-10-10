@@ -85,7 +85,7 @@ public class ConsultaDAO extends DAO{
     public void update(Consulta consulta){
         try{
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE CONSULTA SET COMENTARIOS = ?, HORA = ?, DATA = ?, FINALIZADO = ?, WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE CONSULTA SET COMENTARIOS = ?, HORA = ?, DATA = ?, FINALIZADO = ? WHERE ID = ?");
             stmt.setString(1, consulta.getComentarios());
             stmt.setInt(2, consulta.getHora());
             stmt.setString(3, consulta.getData());
