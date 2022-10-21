@@ -25,7 +25,7 @@ public class Main {
     public static void main(String[] args) {
         
         /* CADASTRO DE CLIENTES 
-        ClienteDAO.getInstance().create("Lucas Peccinin", "34473628809", "13484141", "l247536@dac.unicamp.br", "19982127348");
+        /*ClienteDAO.getInstance().create("Lucas Peccinin", "34473628809", "13484141", "l247536@dac.unicamp.br", "19982127348");
         ClienteDAO.getInstance().create("Bruna Costa", "4254528569", "13485483", "brubs.brunacosta@gmail.com", "198545856985");
         ClienteDAO.getInstance().create("Bruna Costa", "4254528569", "13485483", "brubs.brunacosta@gmail.com", "198545856985");
         List lista = ClienteDAO.getInstance().retrieveAll();
