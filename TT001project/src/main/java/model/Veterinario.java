@@ -26,8 +26,6 @@ public class Veterinario {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-    
 
     public int getId() {
         return id;

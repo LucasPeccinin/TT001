@@ -68,7 +68,7 @@ public class AnimalTableModel extends GenericTableModel{
                 animal.setSexo((String)aValue);
                 break;
             case 3:
-                Especie especies = EspecieDAO.getInstance().retrieveBySimilarName((String)aValue);
+                Especie especies = EspecieDAO.getInstance().retrieveByName((String)aValue);
                 if(especies == null){
                     especies = EspecieDAO.getInstance().create((String)aValue);
                 }
