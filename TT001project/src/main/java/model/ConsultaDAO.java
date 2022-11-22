@@ -1,9 +1,11 @@
 package model;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,7 @@ public class ConsultaDAO extends DAO{
     }
     
     //CRUD
-    public Consulta create(int veterinario, int animal, int tratamento, String comentarios, int hora, String data, int finalizado){
+    public Consulta create(int veterinario, int animal, int tratamento, String comentarios, int hora, Calendar data, boolean finalizado){
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO CONSULTA(VETERINARIO, ANIMAL, TRATAMENTO, COMENTARIOS, HORA, DATA, FINALIZADO) VALUES (?,?,?,?,?,?,?)");
@@ -34,8 +36,8 @@ public class ConsultaDAO extends DAO{
             stmt.setInt(3, tratamento);
             stmt.setString(4, comentarios);
             stmt.setInt(5, hora);
-            stmt.setString(6, data);
-            stmt.setInt(7, finalizado);
+            stmt.setDate(6, new Date(data.getTimeInMillis()));
+            stmt.setInt(7, (finalizado?1:0));
             executeUpdate(stmt);
         }    
         catch (SQLException err){
@@ -61,7 +63,10 @@ public class ConsultaDAO extends DAO{
     private Consulta buildObject(ResultSet rs){
         Consulta consulta = null;
         try{
-            consulta = new Consulta(rs.getInt("ID"),rs.getInt("VETERINARIO"), rs.getInt("ANIMAL"), rs.getInt("TRATAMENTO"), rs.getString("COMENTARIOS"), rs.getInt("HORA"), rs.getString("DATA"), rs.getInt("FINALIZADO"));
+            Calendar dt = Calendar.getInstance();
+            dt.setTime(rs.getDate("DATA"));
+            
+            consulta = new Consulta(rs.getInt("ID"),rs.getInt("VETERINARIO"), rs.getInt("ANIMAL"), rs.getInt("TRATAMENTO"), rs.getString("COMENTARIOS"), rs.getInt("HORA"), dt, rs.getBoolean("FINALIZADO"));
         }
         catch (SQLException e) {
             System.err.println("Erro: " + e.getMessage());
@@ -70,7 +75,7 @@ public class ConsultaDAO extends DAO{
     }
     
     public List retrieveAll(){
-        return this.retrieve("SELECT * FROM CONSULTA");
+        return this.retrieve("SELECT * FROM CONSULTA ORDER BY DATA, HORA");
     }
     
     public List retriveLast(){
@@ -85,12 +90,15 @@ public class ConsultaDAO extends DAO{
     public void update(Consulta consulta){
         try{
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE CONSULTA SET COMENTARIOS = ?, HORA = ?, DATA = ?, FINALIZADO = ? WHERE ID = ?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE CONSULTA SET COMENTARIOS = ?, HORA = ?, DATA = ?, FINALIZADO = ?, ANIMAL = ?, TRATAMENTO = ?, VETERINARIO = ? WHERE ID = ?");
             stmt.setString(1, consulta.getComentarios());
             stmt.setInt(2, consulta.getHora());
-            stmt.setString(3, consulta.getData());
-            stmt.setInt(4, consulta.getFinalizado());
-            stmt.setInt(5, consulta.getId());
+            stmt.setDate(3, new Date(consulta.getData().getTimeInMillis()));
+            stmt.setInt(4, (consulta.isFinalizado()?1:0));
+            stmt.setInt(5, consulta.getAnimal());
+            stmt.setInt(6, consulta.getTratamento());
+            stmt.setInt(7, consulta.getVeterinario());
+            stmt.setInt(8, consulta.getId());
             executeUpdate(stmt);
         }
         catch (SQLException e){

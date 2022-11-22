@@ -14,11 +14,11 @@ public class Consulta {
     private int tratamento;
     private String comentarios;
     private int hora;
-    private String data;
-    private int finalizado;
+    private Calendar data;
+    private boolean finalizado;
     //1 - finalizado 2 - não finalizado
 
-    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, String data, int finalizado) {
+    public Consulta(int id, int veterinario, int animal, int tratamento, String comentarios, int hora, Calendar data, boolean finalizado) {
         this.id = id;
         this.veterinario = veterinario;
         this.animal = animal;
@@ -62,25 +62,24 @@ public class Consulta {
         this.hora = hora;
     }
 
-    public String getData() {
+    public Calendar getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Calendar data) {
         this.data = data;
     }
 
-    public int getFinalizado() {
+    public boolean isFinalizado() {
         return finalizado;
     }
 
-    public void setFinalizado(int finalizado) {
+    public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
     
     @Override
     public String toString() {        
         return "Consulta{" + "id=" + id + ", vet=" + veterinario + ", animal=" + animal + ", cometarios=" + comentarios + ", hora=" + hora + ", data=" + data + ", finalizado=" + finalizado + '}';
-    }
-    
+    } 
 }

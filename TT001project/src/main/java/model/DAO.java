@@ -138,7 +138,7 @@ public abstract class DAO { //abstract - não será instanciada por ninguém. Se
                         "TRATAMENTO INTEGER,\n" +
                         "COMENTARIOS VARCHAR,\n" +
                         "HORA INT,\n" +
-                        "DATA VARCHAR,\n" +
+                        "DATA DATE,\n" +
                         "FINALIZADO INTEGER);"); 
             executeUpdate(stmt);
             //TABELA EXAME

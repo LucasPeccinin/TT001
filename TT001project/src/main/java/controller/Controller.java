@@ -1,13 +1,16 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import view.GenericTableModel;
 import model.*;
 import view.AnimalTableModel;
 import view.ClienteTableModel;
+import view.ConsultaTableModel;
 import view.EspecieTableModel;
 import view.VeterinarioTableModel;
 
@@ -19,20 +22,32 @@ public class Controller {
 
     private static Cliente clienteSelecionado = null;
     private static Animal animalSelecionado = null;
+    private static Veterinario veterinarioSelecionado = null;
     private static JTextField clienteSelecionadoTextField = null;
     private static JTextField animalSelecionadoTextField = null;
+    private static JTextField veterinarioSelecionadoTextField = null;
+    private static int hora;
 
     public static void setTableModel(JTable table, GenericTableModel tableModel) {
         table.setModel(tableModel);
     }
 
-    public static void setTextFields(JTextField cliente, JTextField animal) {
+    public static void setTextFields(JTextField cliente, JTextField animal, JTextField veterinario) {
         clienteSelecionadoTextField = cliente;
         animalSelecionadoTextField = animal;
+        veterinarioSelecionadoTextField = veterinario;
+    }
+
+    public static Veterinario getVeterinarioSelecionado() {
+        return veterinarioSelecionado;
     }
 
     public static Cliente getClienteSelecionado() {
         return clienteSelecionado;
+    }
+
+    public static Animal getAnimalSelecionado() {
+        return animalSelecionado;
     }
 
     public static void setSelected(Object selected) {
@@ -43,7 +58,9 @@ public class Controller {
         } else if (selected instanceof Animal) {
             animalSelecionado = (Animal) selected;
             animalSelecionadoTextField.setText(animalSelecionado.getNome());
-
+        } else if (selected instanceof Veterinario) {
+            veterinarioSelecionado = (Veterinario) selected;
+            veterinarioSelecionadoTextField.setText(veterinarioSelecionado.getNome());
         }
     }
 
@@ -91,6 +108,41 @@ public class Controller {
         return ClienteDAO.getInstance().create(nome, cpf, cep, email, telefone);
     }
 
+    public static Animal novoAnimal(String nome, String sexo, String especie) {
+        return AnimalDAO.getInstance().create(nome, 0, sexo, getClienteSelecionado().getId(), 0);
+    }
+
+    public static Consulta novaConsulta(String comentarios, int hora) {
+        return ConsultaDAO.getInstance().create(getVeterinarioSelecionado().getId(), getAnimalSelecionado().getId(), 0, "", hora, Calendar.getInstance(), false);
+    }
+
+    public static Veterinario novoVeterinario(String nome, String email, String telefone, String cep) {
+        return VeterinarioDAO.getInstance().create(nome, email, telefone, cep);
+    }
+
+    public static Especie novaEspecie(String nome) {
+        return EspecieDAO.getInstance().create(nome);
+    }
+
+    public static boolean novosRegistros(JTable table) {
+        if (table.getModel() instanceof ClienteTableModel) {
+            ((GenericTableModel) table.getModel()).addItem(Controller.novoCliente("", "", "", "", ""));
+        } else if (table.getModel() instanceof VeterinarioTableModel) {
+            ((GenericTableModel) table.getModel()).addItem(Controller.novoVeterinario("", "", "", ""));
+        } else if (table.getModel() instanceof EspecieTableModel) {
+            ((GenericTableModel) table.getModel()).addItem(Controller.novaEspecie(""));
+        } else if (table.getModel() instanceof AnimalTableModel) {
+            ((GenericTableModel) table.getModel()).addItem(Controller.novoAnimal("", "", ""));
+        } else if (table.getModel() instanceof ConsultaTableModel) {
+            if ((clienteSelecionado != null) && (animalSelecionado != null) && (veterinarioSelecionado != null)) {
+                ((GenericTableModel) table.getModel()).addItem(Controller.novaConsulta("", hora));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static void atualizaBotaoTodos(JTable table, JTextField textField) {
         if (table.getModel() instanceof ClienteTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(ClienteDAO.getInstance().retrieveAll());
@@ -105,4 +157,42 @@ public class Controller {
         }
         textField.setText("");
     }
+
+    public static void apagaCliente(Cliente cliente) {
+        List<Animal> animais = AnimalDAO.getInstance().retrieveByIdCliente(cliente.getId());
+        for (Animal animal : animais) {
+            AnimalDAO.getInstance().delete(animal);
+        }
+        ClienteDAO.getInstance().delete(cliente);
+    }
+
+    public static void apagaAnimal(Animal animal) {
+        AnimalDAO.getInstance().delete(animal);
+    }
+
+    public static List getTodasConsultas() {
+        return ConsultaDAO.getInstance().retrieveAll();
+    }
+
+    public static boolean apagaConsulta(JTable table) {
+        if (table.getSelectedRow() >= 0) {
+            Object item = ((GenericTableModel) table.getModel()).getItem(table.getSelectedRow());
+            ((GenericTableModel) table.getModel()).removeItem(table.getSelectedRow());
+            ConsultaDAO.getInstance().delete((Consulta) item);
+            return true;
+        }
+        return false;
+    }
+
+    public static void filtraConsultas(JTable table, JToggleButton jtTodas, JToggleButton jtHoje, JToggleButton jtVet) {
+        if (table.getModel() instanceof ConsultaTableModel) {
+            String where = "";
+            if (!jtTodas.isSelected()) {
+                where = "WHERE DATA >= DATE('NOW')";
+            }
+            String query = "SELECT * FROM CONSULTA" + where + "ORDER BY DATA, HORARIO";
+            ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
+        }
+    }
+
 }
