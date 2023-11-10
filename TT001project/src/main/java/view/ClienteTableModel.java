@@ -11,7 +11,7 @@ import model.ClienteDAO;
 public class ClienteTableModel extends GenericTableModel {
    
     public ClienteTableModel(List vDados){
-        super(vDados, new String[]{"Nome", "CEP", "E-mail", "Telefone"});
+        super(vDados, new String[]{"Nome", "CPF", "CEP", "E-mail", "Telefone"});
     }
     
     @Override
@@ -25,6 +25,8 @@ public class ClienteTableModel extends GenericTableModel {
                 return String.class;
             case 3:
                 return String.class;
+            case 4:
+                return String.class;
             default:
                 throw new IndexOutOfBoundsException("columnIndex outr of bounds");
         }
@@ -37,10 +39,12 @@ public class ClienteTableModel extends GenericTableModel {
             case 0:
                 return client.getNome();
             case 1:
-                return client.getCep();
+                return client.getCpf();
             case 2:
-                return client.getEmail();
+                return client.getCep();
             case 3:
+                return client.getEmail();
+            case 4:
                 return client.getTelefone();
             default:
                 throw new IndexOutOfBoundsException("columnIndex outr of bounds");
@@ -56,12 +60,15 @@ public class ClienteTableModel extends GenericTableModel {
                 client.setNome((String)aValue);
                 break;
             case 1: 
+                client.setCpf((String)aValue);
+                break;
+            case 2: 
                 client.setCep((String)aValue);
                 break;
-            case 2:
+            case 3:
                 client.setEmail((String)aValue);
                 break;
-            case 3:
+            case 4:
                 client.setTelefone((String)aValue);
                 break;
             default:

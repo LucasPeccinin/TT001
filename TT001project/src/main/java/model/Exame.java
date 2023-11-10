@@ -37,7 +37,7 @@ public class Exame {
     
     @Override
     public String toString(){
-        return "Exame{" + "id=" + id + ", nome=" + nome + ", consulta=" + consulta + '}';
+        return nome;
     }
     
     

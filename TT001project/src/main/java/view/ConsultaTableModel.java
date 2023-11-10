@@ -12,6 +12,8 @@ import model.Cliente;
 import model.ClienteDAO;
 import model.Consulta;
 import model.ConsultaDAO;
+import model.Exame;
+import model.ExameDAO;
 import model.Veterinario;
 import model.VeterinarioDAO;
 
@@ -25,14 +27,14 @@ public class ConsultaTableModel extends GenericTableModel {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public ConsultaTableModel(List vDados) {
-        super(vDados, new String[]{"ID", "Veterinario", "Cliente", "Animal", "Comentarios", "Hora", "Data", "Finalizado"});
+        super(vDados, new String[]{"Veterinario", "Cliente", "Animal", "Comentarios", "Hora", "Data", "Exame", "Finalizado"});
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return Integer.class;
+                return String.class;
             case 1:
                 return String.class;
             case 2:
@@ -40,9 +42,9 @@ public class ConsultaTableModel extends GenericTableModel {
             case 3:
                 return String.class;
             case 4:
-                return String.class;
-            case 5:
                 return Integer.class;
+            case 5:
+                return String.class;
             case 6:
                 return String.class;
             case 7:
@@ -57,22 +59,26 @@ public class ConsultaTableModel extends GenericTableModel {
         Consulta consulta = (Consulta) vDados.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return consulta.getId();
-            case 1:
                 Veterinario veterinario = VeterinarioDAO.getInstance().retrieveById(consulta.getVeterinario());
                 return veterinario.getNome();
-            case 2:
+            case 1:
                 Animal animal = AnimalDAO.getInstance().retrieveById(consulta.getAnimal());
                 return ClienteDAO.getInstance().retrieveById(animal.getCliente()).getNome();
-            case 3:
+            case 2:
                 animal = AnimalDAO.getInstance().retrieveById(consulta.getAnimal());
                 return animal.getNome();
-            case 4:
+            case 3:
                 return consulta.getComentarios();
-            case 5:
+            case 4:
                 return consulta.getHora();
-            case 6:
+            case 5:
                 return dateFormat.format(consulta.getData().getTime());
+            case 6:
+                Exame exame = ExameDAO.getInstance().retrieveByIdConsulta(consulta.getId());
+                if (exame != null){
+                    return exame;
+                }
+                return "";
             case 7:
                 return consulta.isFinalizado();
             default:
@@ -91,14 +97,12 @@ public class ConsultaTableModel extends GenericTableModel {
             case 2:
                 break;
             case 3:
-                break;
-            case 4:
                 consulta.setComentarios((String)aValue);
                 break;
-            case 5:
+            case 4:
                 consulta.setHora((Integer)aValue);
                 break;
-            case 6:
+            case 5:
                 Calendar cal = Calendar.getInstance();
                 try {
                     cal.setTime(dateFormat.parse((String)aValue));
@@ -106,6 +110,9 @@ public class ConsultaTableModel extends GenericTableModel {
                     Logger.getLogger(ConsultaTableModel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 consulta.setData(cal);
+                break;
+            case 6:
+                ExameDAO.getInstance().create((String)aValue, consulta.getId());
                 break;
             case 7:
                 consulta.setFinalizado((Boolean)aValue);

@@ -13,7 +13,7 @@ import model.EspecieDAO;
 public class AnimalTableModel extends GenericTableModel{
     
     public AnimalTableModel(List vDados){
-        super(vDados, new String[]{"Nome","Idade","Sexo","Espécie"});
+        super(vDados, new String[]{"Nome","Nascimento","Sexo","Espécie"});
     }
     
     @Override

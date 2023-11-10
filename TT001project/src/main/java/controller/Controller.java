@@ -1,7 +1,9 @@
 package controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,6 +29,8 @@ public class Controller {
     private static JTextField animalSelecionadoTextField = null;
     private static JTextField veterinarioSelecionadoTextField = null;
     private static int hora;
+    
+    Calendar data;
 
     public static void setTableModel(JTable table, GenericTableModel tableModel) {
         table.setModel(tableModel);
@@ -184,14 +188,30 @@ public class Controller {
         return false;
     }
 
-    public static void filtraConsultas(JTable table, JToggleButton jtTodas, JToggleButton jtHoje, JToggleButton jtVet) {
+    public static void filtraConsultas(JTable table, JToggleButton jtTodas, JToggleButton jtVet) {
         if (table.getModel() instanceof ConsultaTableModel) {
+            String query = "";
             String where = "";
-            if (!jtTodas.isSelected()) {
-                where = "WHERE DATA >= DATE('NOW')";
+            if(table.getModel() instanceof ConsultaTableModel){
+                where = "WHERE data >= DATE('NOW')";
             }
-            String query = "SELECT * FROM CONSULTA" + where + "ORDER BY DATA, HORARIO";
-            ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
+            if (jtTodas.isSelected()/* && (!jtTodas.isSelected() || !jtHoje.isSelected())*/) {
+                /*query = "SELECT * FROM CONSULTA " + where + " ORDER BY DATA, HORA";
+                ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));*/
+                getTodasConsultas();
+            }
+            if (jtVet.isSelected()/* && (!jtTodas.isSelected() || !jtHoje.isSelected())*/){
+                if(getVeterinarioSelecionado() != null){
+                query = "SELECT * FROM CONSULTA WHERE VETERINARIO = " + getVeterinarioSelecionado().getId();
+                ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
+                }
+            }
+//            if (jtHoje.isSelected() && !jtTodas.isSelected() || !jtVet.isSelected()){
+//                if(getVeterinarioSelecionado() != null){
+//                query = "SELECT * FROM CONSULTA WHERE DATA = " + data.getTimeInMillis();
+//                ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
+//                }
+//            }
         }
     }
 
